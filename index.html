@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Burak Değirmenci</title>
+<style>
+:root{--bg:#f6f7f9;--surface:#fff;--text:#14181f;--muted:#5b6472;--line:#e1e5eb;--accent:#0b6bcb;--accent-soft:#e6f0fb;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1116;--surface:#161b22;--text:#e8ecf1;--muted:#97a1af;--line:#262d37;--accent:#58a6ff;--accent-soft:#12233a}}
+:root[data-theme="dark"]{--bg:#0e1116;--surface:#161b22;--text:#e8ecf1;--muted:#97a1af;--line:#262d37;--accent:#58a6ff;--accent-soft:#12233a}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.6}
+.wrap{max-width:1000px;margin:0 auto;padding:0 20px}
+nav{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+nav .wrap{display:flex;justify-content:space-between;align-items:center;height:56px}
+nav b{font-size:17px}
+nav a{color:var(--muted);text-decoration:none;margin-left:18px;font-size:14px}
+nav a:hover{color:var(--accent)}
+.hero{padding:72px 0 48px}
+.tag{display:inline-block;background:var(--accent-soft);color:var(--accent);padding:4px 12px;border-radius:99px;font-size:13px;font-weight:600}
+h1{font-size:clamp(32px,6vw,52px);line-height:1.15;margin:16px 0}
+.hero p{color:var(--muted);max-width:600px;font-size:18px;margin:0 0 24px}
+.btn{display:inline-block;background:var(--accent);color:#fff;padding:11px 22px;border-radius:10px;text-decoration:none;font-weight:600;margin-right:10px}
+.btn.alt{background:transparent;color:var(--text);border:1px solid var(--line)}
+section{padding:48px 0}
+h2{font-size:26px;margin:0 0 24px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.filters button{border:1px solid var(--line);background:var(--surface);color:var(--text);padding:7px 16px;border-radius:99px;cursor:pointer;font-size:14px}
+.filters button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:18px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;transition:transform .15s,border-color .15s}
+.card:hover{transform:translateY(-3px);border-color:var(--accent)}
+.card h3{margin:0 0 6px;font-size:19px}
+.card .type{font-size:12px;color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.card p{color:var(--muted);font-size:15px;margin:8px 0 14px;flex:1}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chips span{background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:2px 9px;font-size:12px;color:var(--muted)}
+.card a{color:var(--accent);font-size:14px;font-weight:600;text-decoration:none}
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.skills div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px}
+.skills h3{margin:0 0 10px;font-size:16px}
+.skills p{margin:0;color:var(--muted);font-size:15px}
+.contact{text-align:center}
+.contact p{color:var(--muted)}
+footer{border-top:1px solid var(--line);padding:24px 0;text-align:center;color:var(--muted);font-size:13px}
+</style>
+</head>
+<body>
+<nav><div class="wrap"><b>Burak Değirmenci</b><div><a href="#projeler">Projeler</a><a href="#yetenekler">Yetenekler</a><a href="#iletisim">İletişim</a></div></div></nav>
+
+<header class="hero"><div class="wrap">
+<span class="tag">Mühendislik &amp; Yazılım</span>
+<h1>Fikirleri çalışan sistemlere dönüştürüyorum.</h1>
+<p>Donanım, gömülü sistemler ve yazılım alanında geliştirdiğim projeleri burada bulabilirsin. Kısa bir tanıtım cümlesini buraya yaz.</p>
+<a class="btn" href="#projeler">Projelere göz at</a><a class="btn alt" href="#iletisim">İletişime geç</a>
+</div></header>
+
+<section id="projeler"><div class="wrap">
+<h2>Projeler</h2>
+<div class="filters" id="filters">
+<button class="on" data-f="hepsi">Hepsi</button><button data-f="muhendislik">Mühendislik</button><button data-f="yazilim">Yazılım</button>
+</div>
+<div class="grid" id="grid">
+<article class="card" data-c="muhendislik"><span class="type">Mühendislik</span><h3>Drone Takip Podu</h3><p>Dronlara takılabilen, modüler Pan-Tilt gimbal yapısına sahip takip sistemi. Kısa proje özetini buraya yaz.</p><div class="chips"><span>Gimbal</span><span>Mekanik tasarım</span><span>Kontrol</span></div><a href="#">Detayları gör →</a></article>
+<article class="card" data-c="yazilim"><span class="type">Yazılım</span><h3>Proje Adı</h3><p>Ne işe yaradığını ve hangi problemi çözdüğünü iki cümleyle anlat.</p><div class="chips"><span>Python</span><span>API</span><span>Git</span></div><a href="#">GitHub →</a></article>
+<article class="card" data-c="muhendislik"><span class="type">Mühendislik</span><h3>Proje Adı</h3><p>Tasarım sürecini, kullandığın araçları ve ortaya çıkan sonucu özetle.</p><div class="chips"><span>CAD</span><span>Prototip</span><span>Test</span></div><a href="#">Detayları gör →</a></article>
+</div>
+</div></section>
+
+<section id="yetenekler"><div class="wrap">
+<h2>Yetenekler</h2>
+<div class="skills">
+<div><h3>Yazılım</h3><p>Python, C/C++, JavaScript, Git</p></div>
+<div><h3>Donanım &amp; Gömülü</h3><p>Mikrodenetleyiciler, sensörler, devre tasarımı</p></div>
+<div><h3>Tasarım &amp; Üretim</h3><p>CAD modelleme, 3B baskı, prototipleme</p></div>
+</div>
+</div></section>
+
+<section id="iletisim"><div class="wrap contact">
+<h2>İletişim</h2>
+<p>Bir proje fikrin mi var ya da sadece merhaba demek mi istiyorsun?</p>
+<a class="btn" href="mailto:ornek@eposta.com">ornek@eposta.com</a><a class="btn alt" href="#">GitHub</a><a class="btn alt" href="#">LinkedIn</a>
+</div></section>
+
+<footer>© 2026 Burak Değirmenci</footer>
+
+<script>
+var btns=document.querySelectorAll('#filters button'),cards=document.querySelectorAll('#grid .card');
+btns.forEach(function(b){b.addEventListener('click',function(){
+btns.forEach(function(x){x.classList.remove('on')});b.classList.add('on');
+cards.forEach(function(c){c.style.display=(b.dataset.f==='hepsi'||c.dataset.c===b.dataset.f)?'':'none'});
+})});
+</script>
+</body>
+</html>

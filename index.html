@@ -1,376 +1,540 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en" id="html-root">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Nur Sena Sevilmiş — Yazılım Mühendisi</title>
-<meta name="description" content="Nur Sena Sevilmiş — Computer Engineering mezunu, yazılım mühendisi. FenLAB, CV-Hunter, EduShift ve ADÜPass projeleri.">
+<title>Nur Sena Sevilmiş — Software Engineer</title>
+<meta name="description" content="Nur Sena Sevilmiş — Computer Engineering graduate, software engineer. FenLAB, CV-Hunter, EduShift, ADÜPass.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --paper: #F3F0E8;
-    --graphite: #24251F;
-    --coral: #D65A36;
-    --cobalt: #5269B8;
-    --lime: #C8D66B;
-    --stone: #D9D3C6;
-    color-scheme: light;
-    box-sizing: border-box;
-    padding-top: env(safe-area-inset-top, 0px);
-    padding-bottom: env(safe-area-inset-bottom, 0px);
+    --bg-1: #0a0d1a; --bg-2: #0e1226;
+    --violet: #8b6bff; --cyan: #3fe0cf; --coral-glow: #ff7a59;
+    --text-hi: #eef0fb; --text-mid: #a6abc9; --text-low: #6d7290;
+    --glass: rgba(255,255,255,0.045); --glass-border: rgba(255,255,255,0.10); --glass-border-hi: rgba(255,255,255,0.22);
+    color-scheme: dark; box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px);
   }
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; scroll-padding-top: 72px; }
-  body {
-    margin: 0;
-    background: var(--paper);
-    color: var(--graphite);
-    font-family: "Inter", sans-serif;
-    line-height: 1.6;
-  }
-  .serif { font-family: "Fraunces", serif; }
+  html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+  body { margin: 0; background: var(--bg-1); color: var(--text-hi); font-family: "Inter", sans-serif; line-height: 1.65; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *{ animation:none!important; transition:none!important; } }
+
+  .display { font-family: "Space Grotesk", sans-serif; }
   .mono { font-family: "JetBrains Mono", monospace; }
-  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
 
-  /* Nav */
-  header.site-nav {
-    position: sticky; top: 0; z-index: 10;
-    background: color-mix(in srgb, var(--paper) 92%, transparent);
-    backdrop-filter: blur(6px);
-    border-bottom: 1px solid var(--stone);
+  .field {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(55% 45% at 15% 10%, color-mix(in srgb, var(--violet) 32%, transparent), transparent 70%),
+      radial-gradient(50% 40% at 95% 25%, color-mix(in srgb, var(--cyan) 22%, transparent), transparent 70%),
+      radial-gradient(60% 50% at 50% 100%, color-mix(in srgb, var(--coral-glow) 10%, transparent), transparent 70%),
+      linear-gradient(180deg, var(--bg-1), var(--bg-2));
   }
-  header.site-nav .wrap {
-    display: flex; align-items: center; justify-content: space-between; height: 64px;
-  }
-  header.site-nav .name { font-size: 1.1rem; }
-  header.site-nav nav { display: flex; gap: 20px; overflow-x: auto; }
-  header.site-nav nav a {
-    color: color-mix(in srgb, var(--graphite) 65%, transparent);
-    text-decoration: none; font-size: 0.75rem; letter-spacing: 0.03em;
-    white-space: nowrap;
-  }
-  header.site-nav nav a:hover,
-  header.site-nav nav a:focus-visible { color: var(--coral); }
 
-  /* Hero */
-  .hero { padding: 96px 0 72px; }
-  .hero .eyebrow { font-size: 0.8rem; color: color-mix(in srgb, var(--graphite) 50%, transparent); margin-bottom: 20px; }
+  :focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+
+  /* ---- Layout shell: fixed identity rail + scrolling content ---- */
+  .layout { display: flex; position: relative; z-index: 1; min-height: 100vh; }
+
+  .rail {
+    width: 260px; flex-shrink: 0; position: sticky; top: 0; align-self: flex-start;
+    height: 100vh; display: flex; flex-direction: column; justify-content: space-between;
+    padding: 36px 28px; border-right: 1px solid var(--glass-border);
+  }
+  .rail-top .brand { font-size: 1.1rem; display: block; margin-bottom: 4px; }
+  .rail-top .role { font-size: 0.75rem; color: var(--text-low); }
+
+  .rail-nav { display: flex; flex-direction: column; gap: 16px; margin-top: 56px; }
+  .rail-nav a {
+    display: flex; align-items: center; gap: 10px; text-decoration: none;
+    color: var(--text-mid); font-size: 0.85rem; transition: color 0.15s;
+  }
+  .rail-nav a .n { font-family: "JetBrains Mono", monospace; font-size: 0.68rem; color: var(--text-low); width: 18px; }
+  .rail-nav a:hover, .rail-nav a:focus-visible { color: var(--text-hi); }
+
+  .rail-bottom { display: flex; flex-direction: column; gap: 16px; }
+  .status-line { display: flex; align-items: center; gap: 8px; font-size: 0.75rem; color: var(--text-mid); }
+  .status-line .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 8px var(--cyan); flex-shrink: 0; }
+  .lang-toggle { display: flex; border: 1px solid var(--glass-border); border-radius: 999px; overflow: hidden; width: fit-content; }
+  .lang-toggle button {
+    font-family: "JetBrains Mono", monospace; font-size: 0.72rem; background: transparent; color: var(--text-low);
+    border: none; padding: 6px 13px; cursor: pointer; transition: color 0.15s, background 0.15s;
+  }
+  .lang-toggle button.active { color: var(--bg-1); background: var(--text-hi); }
+  .lang-toggle button:not(.active):hover { color: var(--text-hi); }
+
+  /* Mobile: rail becomes a top bar */
+  @media (max-width: 900px) {
+    .layout { flex-direction: column; }
+    .rail {
+      width: 100%; height: auto; position: sticky; top: 0; z-index: 20;
+      flex-direction: row; align-items: center; padding: 16px 20px;
+      border-right: none; border-bottom: 1px solid var(--glass-border);
+      backdrop-filter: blur(14px); background: rgba(10,13,26,0.7);
+    }
+    .rail-top { display: flex; align-items: baseline; gap: 10px; }
+    .rail-top .role { display: none; }
+    .rail-nav { flex-direction: row; margin: 0 0 0 auto; gap: 14px; overflow-x: auto; }
+    .rail-nav a span.label { display: none; }
+    .rail-bottom { flex-direction: row; align-items: center; gap: 10px; margin-left: 10px; }
+    .status-line { display: none; }
+  }
+
+  .content { flex: 1; min-width: 0; padding: 0 40px 40px; }
+  @media (max-width: 900px) { .content { padding: 0 22px 32px; } }
+
+  .inner { max-width: 760px; }
+
+  /* ---- Hero ---- */
+  .hero {
+    padding: 100px 0 80px;
+    display: grid; grid-template-columns: 1fr 220px; gap: 32px; align-items: start;
+  }
+  @media (max-width: 900px) { .hero { grid-template-columns: 1fr; padding-top: 56px; } }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes focusIn { from { opacity: 0; transform: translateY(10px); filter: blur(14px); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }
+
+  .hero-eyebrow {
+    display: inline-block; font-size: 0.8rem; color: var(--text-mid);
+    border: 1px solid var(--glass-border); background: var(--glass);
+    padding: 6px 14px; border-radius: 999px; margin-bottom: 22px;
+    opacity: 0; animation: fadeUp 0.6s ease-out 0.1s forwards;
+  }
   .hero h1 {
-    font-size: clamp(2.6rem, 8vw, 6rem);
-    line-height: 1.0;
-    margin: 0 0 24px;
-    font-weight: 600;
-    max-width: 16ch;
+    font-size: clamp(2.6rem, 6.4vw, 5rem); line-height: 1.02; font-weight: 600; margin: 0 0 20px;
+    background: linear-gradient(100deg, var(--text-hi) 40%, var(--cyan) 70%, var(--violet) 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    opacity: 0; animation: focusIn 0.9s cubic-bezier(.2,.8,.2,1) 0.28s forwards;
   }
-  .hero p { font-size: 1.15rem; max-width: 42ch; color: color-mix(in srgb, var(--graphite) 75%, transparent); margin: 0; }
-
-  hr.div { border: none; border-top: 1px solid var(--stone); margin: 0; }
-
-  section { padding: 72px 0; }
-  .section-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 40px; }
-  .section-head .num { font-size: 0.85rem; color: var(--coral); }
-  .section-head h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); margin: 0; font-weight: 500; }
-
-  /* Work */
-  .projects { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px 40px; }
-  @media (max-width: 680px) { .projects { grid-template-columns: 1fr; } }
-
-  .project-card { text-decoration: none; color: inherit; display: block; }
-  .cover {
-    aspect-ratio: 4 / 3;
-    border: 1px solid var(--stone);
-    background: color-mix(in srgb, var(--stone) 35%, transparent);
-    display: flex; align-items: center; justify-content: center;
-    overflow: hidden;
-    margin-bottom: 16px;
+  .hero p.lead {
+    font-size: 1.1rem; color: var(--text-mid); max-width: 42ch; margin: 0;
+    opacity: 0; animation: fadeUp 0.6s ease-out 0.6s forwards;
   }
-  .cover svg { width: 70%; height: 70%; }
 
-  .project-card .meta { display: flex; align-items: baseline; gap: 12px; margin-bottom: 4px; }
-  .project-card .idx { font-size: 0.75rem; color: color-mix(in srgb, var(--graphite) 40%, transparent); }
-  .project-card h3 { font-size: 1.4rem; margin: 0; font-weight: 500; }
-  .project-card:hover h3, .project-card:focus-visible h3 { color: var(--coral); }
-  .project-card p { margin: 6px 0 10px; color: color-mix(in srgb, var(--graphite) 70%, transparent); font-size: 0.95rem; max-width: 42ch; }
-  .project-card .tech { font-size: 0.75rem; color: color-mix(in srgb, var(--graphite) 55%, transparent); }
+  .status-panel {
+    background: var(--glass); border: 1px solid var(--glass-border); border-radius: 14px;
+    padding: 18px; backdrop-filter: blur(14px); margin-top: 6px;
+    opacity: 0; animation: fadeUp 0.6s ease-out 0.8s forwards;
+  }
+  .status-panel .row { display: flex; justify-content: space-between; gap: 10px; font-size: 0.75rem; padding: 7px 0; border-bottom: 1px solid var(--glass-border); }
+  .status-panel .row:last-child { border-bottom: none; }
+  .status-panel .row .k { color: var(--text-low); }
+  .status-panel .row .v { color: var(--text-hi); font-family: "JetBrains Mono", monospace; text-align: right; }
 
-  /* Detail (expand) */
-  .project-detail {
-    display: none;
-    margin-top: 16px;
-    padding-top: 16px;
-    border-top: 1px solid var(--stone);
-    font-size: 0.95rem;
-    color: color-mix(in srgb, var(--graphite) 80%, transparent);
-    max-width: 55ch;
+  /* ---- Spine: connects sections 01–05 with numbered nodes ---- */
+  .spine-wrap { position: relative; }
+  .spine-wrap::before {
+    content: ""; position: absolute; left: 28px; top: 16px; bottom: 16px; width: 1px;
+    background: linear-gradient(to bottom, transparent, var(--glass-border-hi) 6%, var(--glass-border-hi) 94%, transparent);
   }
-  .project-detail .field { margin-bottom: 12px; }
-  .project-detail .field b {
-    display: block; font-family: "JetBrains Mono", monospace; font-weight: 500;
-    font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em;
-    color: var(--coral); margin-bottom: 4px;
+
+  section.node { padding: 64px 0; }
+  .section-head { display: grid; grid-template-columns: 56px 1fr; align-items: center; margin-bottom: 36px; }
+  .section-head .chip {
+    width: 28px; height: 28px; border-radius: 50%; background: var(--bg-1); border: 1px solid var(--glass-border-hi);
+    display: flex; align-items: center; justify-content: center; font-family: "JetBrains Mono", monospace; font-size: 0.68rem; color: var(--cyan);
+    position: relative; z-index: 1;
   }
+  .section-head h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 600; margin: 0; }
+  .node-body { margin-left: 56px; }
+  @media (max-width: 560px) { .node-body { margin-left: 0; } .section-head { grid-template-columns: 36px 1fr; } }
+
+  .glass { background: var(--glass); border: 1px solid var(--glass-border); border-radius: 18px; backdrop-filter: blur(14px) saturate(140%); transition: border-color 0.2s, background 0.2s; }
+
+  /* ---- Work: staggered grid ---- */
+  .bento { display: grid; grid-template-columns: repeat(6, 1fr); gap: 18px; }
+  .project-card { grid-column: span 3; padding: 24px; cursor: pointer; text-decoration: none; color: inherit; display: block; position: relative; overflow: hidden; }
+  .project-card.featured { grid-column: span 6; }
+  .project-card:nth-child(3) { margin-top: 36px; }
+  @media (max-width: 760px) { .project-card, .project-card.featured { grid-column: span 6; margin-top: 0 !important; } }
+
+  .project-card:hover, .project-card:focus-visible, .project-card.open { border-color: var(--glass-border-hi); background: rgba(255,255,255,0.07); }
+  .project-card .glow { position: absolute; top: -40%; right: -20%; width: 60%; height: 140%; border-radius: 50%; filter: blur(50px); opacity: 0.32; pointer-events: none; }
+  .project-card[data-accent="violet"] .glow { background: var(--violet); }
+  .project-card[data-accent="cyan"] .glow { background: var(--cyan); }
+  .project-card[data-accent="coral"] .glow { background: var(--coral-glow); }
+
+  .project-card .idx { font-family: "JetBrains Mono", monospace; font-size: 0.72rem; color: var(--text-low); position: relative; }
+  .project-card h3 { font-family: "Space Grotesk", sans-serif; font-size: 1.4rem; font-weight: 600; margin: 8px 0; position: relative; }
+  .project-card.featured h3 { font-size: 1.8rem; }
+  .project-card p.desc { color: var(--text-mid); font-size: 0.93rem; max-width: 46ch; margin: 0 0 14px; position: relative; }
+  .tech-row { display: flex; flex-wrap: wrap; gap: 6px; position: relative; }
+  .tech-row span { font-family: "JetBrains Mono", monospace; font-size: 0.66rem; color: var(--text-mid); border: 1px solid var(--glass-border); border-radius: 999px; padding: 3px 10px; }
+
+  .project-detail { display: none; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--glass-border); position: relative; }
   .project-card.open .project-detail { display: block; }
-  .project-card .toggle-label { font-size: 0.8rem; color: var(--coral); margin-top: 8px; display: inline-block; }
+  .project-detail .field { margin-bottom: 12px; }
+  .project-detail .field:last-child { margin-bottom: 0; }
+  .project-detail .field b { display: block; font-family: "JetBrains Mono", monospace; font-size: 0.66rem; color: var(--cyan); margin-bottom: 4px; font-weight: 500; }
+  .project-detail .field p { margin: 0; font-size: 0.88rem; color: var(--text-mid); }
+  .expand-hint { font-family: "JetBrains Mono", monospace; font-size: 0.7rem; color: var(--text-low); margin-top: 12px; display: block; position: relative; }
 
-  /* About */
-  #about p { max-width: 62ch; color: color-mix(in srgb, var(--graphite) 82%, transparent); margin: 0 0 16px; }
+  /* ---- About: split text / journey column ---- */
+  .about-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 28px; }
+  @media (max-width: 700px) { .about-grid { grid-template-columns: 1fr; } }
+  .about-text p { font-size: 0.98rem; color: var(--text-mid); max-width: 56ch; margin: 0 0 15px; }
+  .about-text p:last-child { margin-bottom: 0; }
+  .journey { border-left: 1px solid var(--glass-border); padding-left: 20px; display: flex; flex-direction: column; gap: 18px; }
+  .journey .step .y { font-family: "JetBrains Mono", monospace; font-size: 0.7rem; color: var(--violet); display: block; margin-bottom: 2px; }
+  .journey .step .l { font-size: 0.86rem; color: var(--text-hi); }
 
-  /* Toolkit */
-  .toolkit-group { padding: 24px 0; border-bottom: 1px solid var(--stone); }
-  .toolkit-group:last-child { border-bottom: none; }
-  .toolkit-group .meta { display: flex; align-items: baseline; gap: 12px; margin-bottom: 8px; }
-  .toolkit-group .idx { font-size: 0.75rem; color: var(--coral); }
-  .toolkit-group h3 { font-size: 1.15rem; margin: 0; font-weight: 500; }
-  .toolkit-group .list { color: color-mix(in srgb, var(--graphite) 70%, transparent); font-size: 0.9rem; margin-bottom: 8px; }
-  .toolkit-group .note { color: color-mix(in srgb, var(--graphite) 55%, transparent); font-size: 0.9rem; max-width: 60ch; }
+  /* ---- Toolkit: one featured row + three-up ---- */
+  .toolkit-stack { display: flex; flex-direction: column; gap: 14px; }
+  .toolkit-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  @media (max-width: 700px) { .toolkit-row { grid-template-columns: 1fr; } }
+  .toolkit-group { padding: 22px; }
+  .toolkit-group .head { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .toolkit-group .head .num { font-family: "JetBrains Mono", monospace; font-size: 0.68rem; color: var(--violet); }
+  .toolkit-group h3 { font-family: "Space Grotesk", sans-serif; font-size: 1.05rem; margin: 0; font-weight: 600; }
+  .toolkit-group .list { font-size: 0.85rem; color: var(--text-hi); opacity: 0.85; margin: 0 0 6px; }
+  .toolkit-group .note { font-size: 0.82rem; color: var(--text-low); margin: 0; }
 
-  /* Experience */
-  .exp-entry { padding: 20px 0; border-bottom: 1px solid var(--stone); }
+  /* ---- Experience: nodes on spine ---- */
+  .exp-entry { padding: 18px 0; border-bottom: 1px solid var(--glass-border); }
   .exp-entry:last-child { border-bottom: none; }
   .exp-entry .row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 16px; margin-bottom: 6px; }
-  .exp-entry h3 { font-size: 1.05rem; margin: 0; font-weight: 500; }
-  .exp-entry .dates { font-size: 0.75rem; font-family: "JetBrains Mono", monospace; color: color-mix(in srgb, var(--graphite) 50%, transparent); white-space: nowrap; }
-  .exp-entry p { margin: 0; font-size: 0.92rem; color: color-mix(in srgb, var(--graphite) 70%, transparent); max-width: 60ch; }
-  .exp-entry .sub { margin-top: 8px; padding-left: 14px; border-left: 1px solid var(--stone); font-size: 0.88rem; color: color-mix(in srgb, var(--graphite) 55%, transparent); }
+  .exp-entry h3 { font-family: "Space Grotesk", sans-serif; font-size: 1rem; margin: 0; font-weight: 600; }
+  .exp-entry .dates { font-family: "JetBrains Mono", monospace; font-size: 0.72rem; color: var(--text-low); white-space: nowrap; }
+  .exp-entry p { margin: 0; font-size: 0.9rem; color: var(--text-mid); max-width: 58ch; }
+  .exp-entry .sub { margin-top: 10px; padding-left: 14px; border-left: 1px solid var(--glass-border); font-size: 0.84rem; color: var(--text-low); }
 
-  /* Contact */
-  #contact ul { list-style: none; padding: 0; margin: 0; }
-  #contact li { margin-bottom: 10px; }
-  #contact a, #contact .pending {
-    font-family: "Fraunces", serif; font-size: 1.8rem; text-decoration: none; color: var(--graphite);
-  }
-  #contact a:hover, #contact a:focus-visible { color: var(--coral); }
-  #contact .pending { color: color-mix(in srgb, var(--graphite) 30%, transparent); }
-  #contact .pending .tag { font-family: "JetBrains Mono", monospace; font-size: 0.7rem; vertical-align: middle; }
+  /* ---- Contact: oversized stacked links ---- */
+  .contact-list { display: flex; flex-direction: column; }
+  .contact-item { display: flex; align-items: baseline; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--glass-border); text-decoration: none; color: inherit; }
+  .contact-item:last-child { border-bottom: none; }
+  .contact-item .idx { font-family: "JetBrains Mono", monospace; font-size: 0.72rem; color: var(--text-low); width: 20px; }
+  .contact-item .label { font-family: "Space Grotesk", sans-serif; font-size: 1.6rem; font-weight: 600; color: var(--text-hi); transition: color 0.15s; }
+  .contact-item:not(.pending):hover .label, .contact-item:not(.pending):focus-visible .label { color: var(--cyan); }
+  .contact-item.pending .label { color: var(--text-low); }
+  .contact-item .tag { font-family: "JetBrains Mono", monospace; font-size: 0.68rem; color: var(--text-low); margin-left: auto; }
 
-  footer { padding: 32px 0 48px; }
-  footer p { font-size: 0.78rem; color: color-mix(in srgb, var(--graphite) 45%, transparent); margin: 0; }
-
-  :focus-visible { outline: 2px solid var(--coral); outline-offset: 2px; }
-
-  @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    * { transition: none !important; }
-  }
+  footer { padding: 40px 0 20px; }
+  footer p { font-size: 0.74rem; color: var(--text-low); margin: 0; }
 </style>
 </head>
 <body>
 
-<header class="site-nav">
-  <div class="wrap">
-    <span class="name serif">NSS</span>
-    <nav>
-      <a href="#work">01 — Work</a>
-      <a href="#about">02 — About</a>
-      <a href="#toolkit">03 — Toolkit</a>
-      <a href="#experience">04 — Experience</a>
-      <a href="#contact">05 — Contact</a>
+<div class="field" aria-hidden="true"></div>
+
+<div class="layout">
+  <aside class="rail">
+    <div class="rail-top">
+      <span class="brand display">NSS</span>
+      <span class="role" data-i18n="hero.eyebrow">Software Engineer</span>
+    </div>
+
+    <nav class="rail-nav">
+      <a href="#work"><span class="n">01</span><span class="label" data-i18n="nav.work">Work</span></a>
+      <a href="#about"><span class="n">02</span><span class="label" data-i18n="nav.about">About</span></a>
+      <a href="#toolkit"><span class="n">03</span><span class="label" data-i18n="nav.toolkit">Toolkit</span></a>
+      <a href="#experience"><span class="n">04</span><span class="label" data-i18n="nav.experience">Experience</span></a>
+      <a href="#contact"><span class="n">05</span><span class="label" data-i18n="nav.contact">Contact</span></a>
     </nav>
-  </div>
-</header>
 
-<section class="hero">
-  <div class="wrap">
-    <p class="mono eyebrow">00</p>
-    <h1 class="serif">Software engineer.</h1>
-    <p>I like figuring out how things work, especially when it isn't obvious.</p>
-  </div>
-</section>
+    <div class="rail-bottom">
+      <div class="status-line"><span class="dot"></span><span data-i18n="hero.badge">Open to opportunities</span></div>
+      <span class="lang-toggle">
+        <button type="button" data-lang="en" class="active">EN</button>
+        <button type="button" data-lang="tr">TR</button>
+      </span>
+    </div>
+  </aside>
 
-<hr class="div">
-
-<section id="work">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="mono num">01</span>
-      <h2>Selected Work</h2>
+  <main class="content">
+    <div class="inner">
+      <section class="hero" id="intro">
+        <div>
+          <span class="hero-eyebrow mono" data-i18n="hero.eyebrow">Software Engineer</span>
+          <h1 class="display" data-i18n="hero.title">I turn uncertainty into working code.</h1>
+          <p class="lead" data-i18n="hero.sub">I like figuring out how systems work, especially when it isn't obvious.</p>
+        </div>
+        <div class="status-panel">
+          <div class="row"><span class="k mono" data-i18n="panel.focus">Focus</span><span class="v" data-i18n="panel.focus-v">Full-stack</span></div>
+          <div class="row"><span class="k mono" data-i18n="panel.base">Based in</span><span class="v">Istanbul, TR</span></div>
+          <div class="row"><span class="k mono" data-i18n="panel.grad">Graduating</span><span class="v">Sep 2026</span></div>
+        </div>
+      </section>
     </div>
 
-    <div class="projects">
+    <div class="spine-wrap">
+      <div class="inner">
 
-      <!-- FenLAB -->
-      <a href="#" class="project-card" data-slug="fenlab" onclick="toggleProject(event, this)">
-        <div class="cover">
-          <svg viewBox="0 0 120 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g stroke="#24251F" stroke-opacity="0.18">
-              <rect x="4" y="4" width="26" height="26"/><rect x="33" y="4" width="26" height="26"/>
-              <rect x="62" y="4" width="26" height="26"/><rect x="91" y="4" width="25" height="26"/>
-              <rect x="4" y="33" width="26" height="26"/><rect x="33" y="33" width="26" height="26" fill="#D65A36" fill-opacity="0.85" stroke="none"/>
-              <rect x="62" y="33" width="26" height="26"/><rect x="91" y="33" width="25" height="26"/>
-              <rect x="4" y="62" width="26" height="24"/><rect x="33" y="62" width="26" height="24"/>
-              <rect x="62" y="62" width="26" height="24"/><rect x="91" y="62" width="25" height="24"/>
-            </g>
-          </svg>
-        </div>
-        <div class="meta"><span class="idx mono">01</span><h3>FenLAB</h3></div>
-        <p>Öğretmenler ve öğrenciler için açık kaynaklı bir STEM deney paylaşım platformu.</p>
-        <span class="tech mono">Kotlin · Jetpack Compose · Spring Boot · PostgreSQL</span>
-        <span class="toggle-label mono">Detayları gör →</span>
+        <section id="work" class="node">
+          <div class="section-head"><span class="chip">01</span><h2 data-i18n="work.heading">Selected Work</h2></div>
+          <div class="node-body">
+            <div class="bento">
 
-        <div class="project-detail">
-          <div class="field"><b>Rolüm</b>Tek başıma geliştirdiğim full-stack bir proje — Android uygulamasını ve backend'i uçtan uca kendim tasarladım ve geliştirdim. Bitirme tezi projem.</div>
-          <div class="field"><b>Teknik Yaklaşım</b>Android: Kotlin + Jetpack Compose (MVVM). Backend: Spring Boot, PostgreSQL, MinIO. Railway üzerinde tez savunması için deploy edildi.</div>
-          <div class="field"><b>Önemli Kararlar</b>Yerel geliştirme ortamından Railway deployment URL'sine geçişte veri mapping katmanının yeniden düzenlenmesi, MinIO'dan servis edilen görsellerde Coil ile medya yükleme sorunlarının çözülmesi, EXIF yön bilgisi ve PDF/FileProvider davranışının düzeltilmesi.</div>
-          <div class="field"><b>Sonuç</b>Tez savunması kapsamında Railway üzerinde deploy edilip gösterildi. Şu anda canlı bir üretim servisi olarak sürdürülmüyor.</div>
-        </div>
-      </a>
+              <a href="#" class="project-card glass featured" data-accent="violet" onclick="toggleProject(event, this)">
+                <div class="glow"></div>
+                <span class="idx mono">01</span>
+                <h3>FenLAB</h3>
+                <p class="desc" data-i18n="proj.fenlab.desc">An open-source STEM experiment-sharing platform for teachers and students.</p>
+                <div class="tech-row"><span>Kotlin</span><span>Jetpack Compose</span><span>Spring Boot</span><span>PostgreSQL</span></div>
+                <span class="expand-hint" data-i18n="ui.expand">Tap to expand</span>
+                <div class="project-detail">
+                  <div class="field"><b data-i18n="field.role">My Role</b><p data-i18n="proj.fenlab.role">Solo full-stack build — I designed and implemented both the Android client and the backend, end to end, as my graduation thesis project.</p></div>
+                  <div class="field"><b data-i18n="field.approach">Technical Approach</b><p data-i18n="proj.fenlab.approach">Android: Kotlin + Jetpack Compose (MVVM). Backend: Spring Boot, PostgreSQL, MinIO. Deployed to Railway for the thesis defense.</p></div>
+                  <div class="field"><b data-i18n="field.decisions">Key Decisions</b><p data-i18n="proj.fenlab.decisions">Refactoring the data mapping layer for the Railway deployment URL, resolving MinIO media-loading issues with Coil, fixing EXIF orientation and PDF/FileProvider behavior.</p></div>
+                  <div class="field"><b data-i18n="field.outcome">Outcome</b><p data-i18n="proj.fenlab.outcome">Deployed and demonstrated at the thesis defense. Not currently maintained as a production service.</p></div>
+                </div>
+              </a>
 
-      <!-- CV-Hunter -->
-      <a href="#" class="project-card" data-slug="cv-hunter" onclick="toggleProject(event, this)">
-        <div class="cover">
-          <svg viewBox="0 0 120 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="24" y="22" width="30" height="46" stroke="#24251F" stroke-opacity="0.25"/>
-            <rect x="66" y="22" width="30" height="46" fill="#5269B8" fill-opacity="0.85"/>
-          </svg>
-        </div>
-        <div class="meta"><span class="idx mono">02</span><h3>CV-Hunter</h3></div>
-        <p>Türksat stajımda geliştirilen, yapay zeka destekli CV ve iş eşleştirme platformu.</p>
-        <span class="tech mono">React · React Query · Ant Design · Keycloak</span>
-        <span class="toggle-label mono">Detayları gör →</span>
+              <a href="#" class="project-card glass" data-accent="cyan" onclick="toggleProject(event, this)">
+                <div class="glow"></div>
+                <span class="idx mono">02</span>
+                <h3>CV-Hunter</h3>
+                <p class="desc" data-i18n="proj.cvhunter.desc">An AI-powered CV and job matching platform, built during my Türksat internship.</p>
+                <div class="tech-row"><span>React</span><span>React Query</span><span>Keycloak</span></div>
+                <span class="expand-hint" data-i18n="ui.expand">Tap to expand</span>
+                <div class="project-detail">
+                  <div class="field"><b data-i18n="field.role">My Role</b><p data-i18n="proj.cvhunter.role">Sole frontend developer, working alongside separate backend and AI/matching teams. I integrated the matching results into the UI — I didn't build the matching algorithm itself.</p></div>
+                  <div class="field"><b data-i18n="field.approach">Technical Approach</b><p data-i18n="proj.cvhunter.approach">React + React Query + Ant Design, state via Zustand, auth via Keycloak, connecting to Türksat's internal APIs.</p></div>
+                  <div class="field"><b data-i18n="field.outcome">Outcome</b><p data-i18n="proj.cvhunter.outcome">Actively in development during my internship; its status afterward is unknown to me.</p></div>
+                </div>
+              </a>
 
-        <div class="project-detail">
-          <div class="field"><b>Rolüm</b>Türksat'ta tek frontend geliştiricisiydim; ayrı backend ve yapay zeka/eşleştirme ekipleriyle birlikte çalıştım. Eşleştirme algoritmasını ben geliştirmedim — sorumluluğum backend API'lerini entegre edip sonuçları arayüzde sunmaktı.</div>
-          <div class="field"><b>Teknik Yaklaşım</b>React + React Query + Ant Design, durum yönetimi Zustand, form doğrulama Joi. Kimlik doğrulama Keycloak üzerinden; Docker ve MinIO ile birlikte Türksat'ın iç API'lerine entegrasyon.</div>
-          <div class="field"><b>Sonuç</b>Stajım süresince proje aktif geliştirme aşamasındaydı; sonrasında hayata geçirilip geçirilmediği konusunda bilgim yok.</div>
-        </div>
-      </a>
+              <a href="#" class="project-card glass" data-accent="cyan" onclick="toggleProject(event, this)">
+                <div class="glow"></div>
+                <span class="idx mono">03</span>
+                <h3>EduShift</h3>
+                <p class="desc" data-i18n="proj.edushift.desc">A school weekly timetable management system, built as an internship project.</p>
+                <div class="tech-row"><span>React</span><span>Supabase</span><span>Tailwind</span></div>
+                <span class="expand-hint" data-i18n="ui.expand">Tap to expand</span>
+                <div class="project-detail">
+                  <div class="field"><b data-i18n="field.role">My Role</b><p data-i18n="proj.edushift.role">Solo development end to end — frontend, backend integration, and database integration/implementation.</p></div>
+                  <div class="field"><b data-i18n="field.decisions">Key Decisions</b><p data-i18n="proj.edushift.decisions">The core challenge is automatic timetable generation — a recursive block-pattern algorithm with two-layer collision detection.</p></div>
+                  <div class="field"><b data-i18n="field.outcome">Outcome</b><p data-i18n="proj.edushift.outcome">Still in active development; some functionality is not yet finished.</p></div>
+                </div>
+              </a>
 
-      <!-- EduShift -->
-      <a href="#" class="project-card" data-slug="eduschedule" onclick="toggleProject(event, this)">
-        <div class="cover">
-          <svg viewBox="0 0 120 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g stroke="#24251F" stroke-opacity="0.2">
-              <line x1="14" y1="24" x2="106" y2="24"/>
-              <line x1="14" y1="45" x2="106" y2="45"/>
-              <line x1="14" y1="66" x2="106" y2="66"/>
-            </g>
-            <circle cx="36" cy="24" r="4" fill="#C8D66B" stroke="none"/>
-            <circle cx="60" cy="45" r="4" fill="#C8D66B" stroke="none"/>
-            <circle cx="84" cy="66" r="4" fill="#C8D66B" stroke="none"/>
-          </svg>
-        </div>
-        <div class="meta"><span class="idx mono">03</span><h3>EduShift</h3></div>
-        <p>Bir staj projesi olarak geliştirilen okul haftalık ders programı yönetim sistemi.</p>
-        <span class="tech mono">React · Vite · Supabase · Tailwind CSS</span>
-        <span class="toggle-label mono">Detayları gör →</span>
+              <a href="#" class="project-card glass" data-accent="coral" onclick="toggleProject(event, this)">
+                <div class="glow"></div>
+                <span class="idx mono">04</span>
+                <h3>ADÜPass</h3>
+                <p class="desc" data-i18n="proj.adupass.desc">A campus access control prototype, built by a team of three during a hackathon.</p>
+                <div class="tech-row"><span>Flutter</span><span>Firebase</span><span>QR/NFC</span></div>
+                <span class="expand-hint" data-i18n="ui.expand">Tap to expand</span>
+                <div class="project-detail">
+                  <div class="field"><b data-i18n="field.role">My Role</b><p data-i18n="proj.adupass.role">One of three team members — I worked on the Flutter app, QR/NFC, and Firebase integration, collaborating closely on prototyping and testing. Face recognition was a shared team effort, not solely mine.</p></div>
+                  <div class="field"><b data-i18n="field.outcome">Outcome</b><p data-i18n="proj.adupass.outcome">Completed as a hackathon prototype; no placement or award.</p></div>
+                </div>
+              </a>
 
-        <div class="project-detail">
-          <div class="field"><b>Rolüm</b>Uçtan uca tek başıma geliştirdim — frontend, backend entegrasyonu ve veritabanı entegrasyonu/uygulaması dahil.</div>
-          <div class="field"><b>Teknik Yaklaşım</b>React (Vite) + Supabase + Tailwind + HeroUI. Admin/Editör/Öğretmen rolleri, sürükle-bırak program düzenleme, çakışma tespiti, otomatik program oluşturma, PDF dışa aktarma — Supabase RLS ile.</div>
-          <div class="field"><b>Önemli Kararlar</b>Merkezi teknik zorluk: rekürsif blok-desen algoritması ve iki katmanlı çakışma tespitiyle otomatik program oluşturma.</div>
-          <div class="field"><b>Sonuç</b>Hâlâ aktif geliştirme aşamasında; bazı işlevler henüz tamamlanmadı.</div>
-        </div>
-      </a>
+            </div>
+          </div>
+        </section>
 
-      <!-- ADÜPass -->
-      <a href="#" class="project-card" data-slug="adupass" onclick="toggleProject(event, this)">
-        <div class="cover">
-          <svg viewBox="0 0 120 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="30" y="35" width="18" height="18" stroke="#24251F" stroke-opacity="0.25"/>
-            <rect x="51" y="35" width="18" height="18" fill="#D65A36" fill-opacity="0.85"/>
-            <rect x="72" y="35" width="18" height="18" stroke="#24251F" stroke-opacity="0.25"/>
-          </svg>
-        </div>
-        <div class="meta"><span class="idx mono">04</span><h3>ADÜPass</h3></div>
-        <p>Üç kişilik bir ekiple hackathon kapsamında geliştirilen kampüs giriş kontrol prototipi.</p>
-        <span class="tech mono">Flutter · Firebase · QR/NFC</span>
-        <span class="toggle-label mono">Detayları gör →</span>
+        <section id="about" class="node">
+          <div class="section-head"><span class="chip">02</span><h2 data-i18n="about.heading">About</h2></div>
+          <div class="node-body about-grid">
+            <div class="about-text">
+              <p data-i18n="about.p1">I'm a Computer Engineering graduate from Aydın Adnan Menderes University. What draws me to software is the same thing that's shaped everything I've built so far — I like understanding how something actually works, especially when the answer isn't obvious. That's taken me across frontend, backend, and mobile development, less out of a plan and more because I keep following whatever part of a system I don't fully understand yet.</p>
+              <p data-i18n="about.p2">Alongside my degree, I spent a semester on Erasmus at Lodz University of Technology in Poland, which gave me a different academic and cultural environment to learn in. I've also worked as a software intern at Türksat, gaining experience on a real product as part of a team.</p>
+            </div>
+            <div class="journey">
+              <div class="step"><span class="y mono">2021</span><span class="l" data-i18n="journey.adu">Started Computer Engineering, ADÜ</span></div>
+              <div class="step"><span class="y mono">2024</span><span class="l" data-i18n="journey.erasmus">Erasmus exchange, Łódź</span></div>
+              <div class="step"><span class="y mono">2025</span><span class="l" data-i18n="journey.turksat">Internship, Türksat</span></div>
+              <div class="step"><span class="y mono">2026</span><span class="l" data-i18n="journey.grad">Graduation, FenLAB</span></div>
+            </div>
+          </div>
+        </section>
 
-        <div class="project-detail">
-          <div class="field"><b>Rolüm</b>Üç kişilik ekibin bir üyesiydim. Flutter uygulaması, QR/NFC ve Firebase entegrasyonu üzerinde çalıştım; yüz tanıma bileşeni bireysel değil, ekip düzeyinde bir çalışmaydı.</div>
-          <div class="field"><b>Teknik Yaklaşım</b>Flutter + Firebase, erişim yöntemi olarak yüz tanıma ile QR/NFC bir arada. Geliştirme sürecinde Cursor kullanıldı.</div>
-          <div class="field"><b>Sonuç</b>Etkinlik süresi içinde hackathon prototipi olarak tamamlandı; derece veya ödül alınmadı.</div>
-        </div>
-      </a>
+        <section id="toolkit" class="node">
+          <div class="section-head"><span class="chip">03</span><h2 data-i18n="toolkit.heading">Toolkit</h2></div>
+          <div class="node-body toolkit-stack">
+            <div class="toolkit-row" style="grid-template-columns: 1fr;">
+              <div class="toolkit-group glass">
+                <div class="head"><span class="num mono">01</span><h3 data-i18n="toolkit.frontend.title">Frontend</h3></div>
+                <p class="list">React, JavaScript, TypeScript, HTML, CSS, Tailwind CSS, Ant Design, HeroUI, React Query, Zustand</p>
+                <p class="note" data-i18n="toolkit.frontend.note">Used differently per project — React with Ant Design and React Query on CV-Hunter, React with Tailwind and HeroUI on EduShift.</p>
+              </div>
+            </div>
+            <div class="toolkit-row">
+              <div class="toolkit-group glass">
+                <div class="head"><span class="num mono">02</span><h3 data-i18n="toolkit.backend.title">Backend & Databases</h3></div>
+                <p class="list">Java, Kotlin, Spring Boot, PostgreSQL, Supabase, Firebase, REST APIs</p>
+                <p class="note" data-i18n="toolkit.backend.note">Spans FenLAB, CV-Hunter, EduShift, ADÜPass (team-built).</p>
+              </div>
+              <div class="toolkit-group glass">
+                <div class="head"><span class="num mono">03</span><h3 data-i18n="toolkit.mobile.title">Mobile Development</h3></div>
+                <p class="list">Android, Jetpack Compose, Flutter</p>
+                <p class="note" data-i18n="toolkit.mobile.note">Jetpack Compose for FenLAB, Flutter for ADÜPass.</p>
+              </div>
+              <div class="toolkit-group glass">
+                <div class="head"><span class="num mono">04</span><h3 data-i18n="toolkit.tools.title">Tools & Platforms</h3></div>
+                <p class="list">Git, Docker, Keycloak, MinIO, Railway, Cursor</p>
+                <p class="note" data-i18n="toolkit.tools.note">Docker/Keycloak from Türksat; MinIO/Railway for FenLAB; Cursor in ADÜPass.</p>
+              </div>
+            </div>
+          </div>
+        </section>
 
+        <section id="experience" class="node">
+          <div class="section-head"><span class="chip">04</span><h2 data-i18n="experience.heading">Experience</h2></div>
+          <div class="node-body">
+            <div class="exp-entry">
+              <div class="row"><h3 data-i18n="exp.ttb.title">Teknoloji Takip Bilişim — Software Developer Intern</h3><span class="dates mono">Jul 2026 – Aug 2026 · Remote</span></div>
+              <p data-i18n="exp.ttb.desc">Built EduShift, a school scheduling platform, independently — coordinating frontend, database, and scheduling logic, and resolving issues through systematic testing.</p>
+            </div>
+            <div class="exp-entry">
+              <div class="row"><h3 data-i18n="exp.turksat.title">Türksat — Frontend Software Engineering Intern</h3><span class="dates mono">Jul 2025 – Aug 2025</span></div>
+              <p data-i18n="exp.turksat.desc">Frontend development on CV-Hunter — CV upload flows, job listings, matched results display, internal API integration.</p>
+            </div>
+            <div class="exp-entry">
+              <div class="row"><h3 data-i18n="exp.wie.title">IEEE Women in Engineering (WIE) — Coordination Member</h3><span class="dates mono">Sep 2023 – Feb 2024</span></div>
+              <p data-i18n="exp.wie.desc">Helped organize seminars, panels, and STEM outreach activities supporting women in engineering.</p>
+            </div>
+            <div class="exp-entry">
+              <div class="row"><h3 data-i18n="exp.adu.title">Aydın Adnan Menderes University — B.Sc. Computer Engineering</h3><span class="dates mono">Sep 2021 – Sep 2026</span></div>
+              <p data-i18n="exp.adu.desc">Completed my degree; built FenLAB, my graduation project, independently across Android and backend.</p>
+              <div class="sub" data-i18n="exp.erasmus">Erasmus exchange, Lodz University of Technology, Poland — Feb 2024 – Jul 2024</div>
+            </div>
+          </div>
+        </section>
+
+        <section id="contact" class="node">
+          <div class="section-head"><span class="chip">05</span><h2 data-i18n="contact.heading">Contact</h2></div>
+          <div class="node-body">
+            <div class="contact-list">
+              <a href="mailto:nsevilmis.official@gmail.com" class="contact-item"><span class="idx mono">01</span><span class="label">Email</span></a>
+              <a href="https://linkedin.com/in/nursenasevilmis" target="_blank" rel="noopener" class="contact-item"><span class="idx mono">02</span><span class="label">LinkedIn</span></a>
+              <a href="https://github.com/nursenasevilmis" target="_blank" rel="noopener" class="contact-item"><span class="idx mono">03</span><span class="label">GitHub</span></a>
+              <span class="contact-item pending"><span class="idx mono">04</span><span class="label">CV</span><span class="tag" data-i18n="ui.pending">Link pending</span></span>
+            </div>
+          </div>
+        </section>
+
+        <footer><p>© 2026 Nur Sena Sevilmiş</p></footer>
+      </div>
     </div>
-  </div>
-</section>
-
-<hr class="div">
-
-<section id="about">
-  <div class="wrap">
-    <div class="section-head"><span class="mono num">02</span><h2>About</h2></div>
-    <p>Aydın Adnan Menderes Üniversitesi Bilgisayar Mühendisliği mezunuyum. Beni yazılıma çeken şey, bugüne kadar yaptığım her şeyi şekillendiren aynı şey: bir şeyin gerçekte nasıl çalıştığını anlamayı seviyorum, özellikle cevap belli değilse. Bu da beni frontend, backend ve mobil geliştirme arasında dolaştırdı — bir plandan çok, bir sistemin henüz tam anlamadığım kısmını takip etme isteğinden.</p>
-    <p>Eğitimimin yanı sıra, bir dönem Polonya'da Lodz Teknoloji Üniversitesi'nde Erasmus değişim programına katıldım; bu da bana farklı bir akademik ve kültürel ortamda öğrenme deneyimi kazandırdı. Ayrıca Türksat'ta bir yazılım stajı yaparak bireysel bir proje yerine bir ekibin parçası olarak gerçek bir ürün üzerinde deneyim kazandım.</p>
-  </div>
-</section>
-
-<hr class="div">
-
-<section id="toolkit">
-  <div class="wrap">
-    <div class="section-head"><span class="mono num">03</span><h2>Toolkit</h2></div>
-
-    <div class="toolkit-group">
-      <div class="meta"><span class="idx mono">01</span><h3>Frontend</h3></div>
-      <p class="list">React, JavaScript, TypeScript, HTML, CSS, Tailwind CSS, Ant Design, HeroUI, React Query, Zustand</p>
-      <p class="note">Projelere göre farklı şekilde kullanıldı — CV-Hunter'da React, Ant Design ve React Query; EduShift'te React, Tailwind ve HeroUI.</p>
-    </div>
-    <div class="toolkit-group">
-      <div class="meta"><span class="idx mono">02</span><h3>Backend & Veritabanları</h3></div>
-      <p class="list">Java, Kotlin, Spring Boot, PostgreSQL, Supabase, Firebase, REST API'ler</p>
-      <p class="note">FenLAB (Spring Boot, PostgreSQL), CV-Hunter (iç REST API'ler), EduShift (Supabase) ve ADÜPass'ı (Firebase, bir ekiple geliştirildi) kapsıyor.</p>
-    </div>
-    <div class="toolkit-group">
-      <div class="meta"><span class="idx mono">03</span><h3>Mobil Geliştirme</h3></div>
-      <p class="list">Android, Jetpack Compose, Flutter</p>
-      <p class="note">FenLAB'ın Android istemcisi için Jetpack Compose, ADÜPass ekip projesi için Flutter.</p>
-    </div>
-    <div class="toolkit-group">
-      <div class="meta"><span class="idx mono">04</span><h3>Araçlar & Platformlar</h3></div>
-      <p class="list">Git, Docker, Keycloak, MinIO, Railway, Cursor</p>
-      <p class="note">Türksat stajından Docker ve Keycloak; FenLAB'ın medya depolama ve dağıtımı için MinIO ve Railway; ADÜPass'ta Cursor.</p>
-    </div>
-  </div>
-</section>
-
-<hr class="div">
-
-<section id="experience">
-  <div class="wrap">
-    <div class="section-head"><span class="mono num">04</span><h2>Experience</h2></div>
-
-    <div class="exp-entry">
-      <div class="row"><h3>Türksat — Frontend Yazılım Stajyeri</h3><span class="dates mono">Tem 2025 – Ağu 2025</span></div>
-      <p>CV-Hunter üzerinde frontend geliştirme; CV yükleme akışları, iş ilanları ve eşleşme sonuçları gösterimi, iç backend API entegrasyonu.</p>
-    </div>
-    <div class="exp-entry">
-      <div class="row"><h3>Aydın Adnan Menderes Üniversitesi — Bilgisayar Mühendisliği Lisans</h3><span class="dates mono">Eyl 2021 – Eyl 2026</span></div>
-      <p>Bitirme projem FenLAB'ı, Android ve backend tarafını tek başıma geliştirerek hayata geçirdim.</p>
-      <div class="sub">Erasmus değişim programı, Lodz Teknoloji Üniversitesi, Polonya — Şub 2024 – Tem 2024</div>
-    </div>
-  </div>
-</section>
-
-<hr class="div">
-
-<section id="contact">
-  <div class="wrap">
-    <div class="section-head"><span class="mono num">05</span><h2>Contact</h2></div>
-    <ul>
-      <li><span class="pending">Email <span class="tag mono">(link bekleniyor)</span></span></li>
-      <li><span class="pending">LinkedIn <span class="tag mono">https://www.linkedin.com/in/nursenasevilmis/</span></span></li>
-      <li><span class="pending">GitHub <span class="tag mono">https://github.com/nursenasevilmis</span></span></li>
-      <li><span class="pending">CV <span class="tag mono">(link bekleniyor)</span></span></li>
-    </ul>
-  </div>
-</section>
-
-<footer>
-  <div class="wrap"><p>© 2026 Nur Sena Sevilmiş</p></div>
-</footer>
+  </main>
+</div>
 
 <script>
+  var i18n = {
+    en: {
+      "nav.work": "Work", "nav.about": "About", "nav.toolkit": "Toolkit", "nav.experience": "Experience", "nav.contact": "Contact",
+      "hero.badge": "Open to opportunities", "hero.eyebrow": "Software Engineer",
+      "hero.title": "I turn uncertainty into working code.",
+      "hero.sub": "I like figuring out how systems work, especially when it isn't obvious.",
+      "panel.focus": "Focus", "panel.focus-v": "Full-stack", "panel.base": "Based in", "panel.grad": "Graduating",
+      "work.heading": "Selected Work", "ui.expand": "Tap to expand", "ui.pending": "Link pending",
+      "field.role": "My Role", "field.approach": "Technical Approach", "field.decisions": "Key Decisions", "field.outcome": "Outcome",
+      "proj.fenlab.desc": "An open-source STEM experiment-sharing platform for teachers and students.",
+      "proj.fenlab.role": "Solo full-stack build — I designed and implemented both the Android client and the backend, end to end, as my graduation thesis project.",
+      "proj.fenlab.approach": "Android: Kotlin + Jetpack Compose (MVVM). Backend: Spring Boot, PostgreSQL, MinIO. Deployed to Railway for the thesis defense.",
+      "proj.fenlab.decisions": "Refactoring the data mapping layer for the Railway deployment URL, resolving MinIO media-loading issues with Coil, fixing EXIF orientation and PDF/FileProvider behavior.",
+      "proj.fenlab.outcome": "Deployed and demonstrated at the thesis defense. Not currently maintained as a production service.",
+      "proj.cvhunter.desc": "An AI-powered CV and job matching platform, built during my Türksat internship.",
+      "proj.cvhunter.role": "Sole frontend developer, working alongside separate backend and AI/matching teams. I integrated the matching results into the UI — I didn't build the matching algorithm itself.",
+      "proj.cvhunter.approach": "React + React Query + Ant Design, state via Zustand, auth via Keycloak, connecting to Türksat's internal APIs.",
+      "proj.cvhunter.outcome": "Actively in development during my internship; its status afterward is unknown to me.",
+      "proj.edushift.desc": "A school weekly timetable management system, built as an internship project.",
+      "proj.edushift.role": "Solo development end to end — frontend, backend integration, and database integration/implementation.",
+      "proj.edushift.decisions": "The core challenge is automatic timetable generation — a recursive block-pattern algorithm with two-layer collision detection.",
+      "proj.edushift.outcome": "Still in active development; some functionality is not yet finished.",
+      "proj.adupass.desc": "A campus access control prototype, built by a team of three during a hackathon.",
+      "proj.adupass.role": "One of three team members — I worked on the Flutter app, QR/NFC, and Firebase integration, collaborating closely on prototyping and testing. Face recognition was a shared team effort, not solely mine.",
+      "proj.adupass.outcome": "Completed as a hackathon prototype; no placement or award.",
+      "about.heading": "About",
+      "about.p1": "I'm a Computer Engineering graduate from Aydın Adnan Menderes University. What draws me to software is the same thing that's shaped everything I've built so far — I like understanding how something actually works, especially when the answer isn't obvious. That's taken me across frontend, backend, and mobile development, less out of a plan and more because I keep following whatever part of a system I don't fully understand yet.",
+      "about.p2": "Alongside my degree, I spent a semester on Erasmus at Lodz University of Technology in Poland, which gave me a different academic and cultural environment to learn in. I've also worked as a software intern at Türksat, gaining experience on a real product as part of a team.",
+      "journey.adu": "Started Computer Engineering, ADÜ", "journey.erasmus": "Erasmus exchange, Łódź",
+      "journey.turksat": "Internship, Türksat", "journey.grad": "Graduation, FenLAB",
+      "toolkit.heading": "Toolkit",
+      "toolkit.frontend.title": "Frontend",
+      "toolkit.frontend.note": "Used differently per project — React with Ant Design and React Query on CV-Hunter, React with Tailwind and HeroUI on EduShift.",
+      "toolkit.backend.title": "Backend & Databases", "toolkit.backend.note": "Spans FenLAB, CV-Hunter, EduShift, ADÜPass (team-built).",
+      "toolkit.mobile.title": "Mobile Development", "toolkit.mobile.note": "Jetpack Compose for FenLAB, Flutter for ADÜPass.",
+      "toolkit.tools.title": "Tools & Platforms", "toolkit.tools.note": "Docker/Keycloak from Türksat; MinIO/Railway for FenLAB; Cursor in ADÜPass.",
+      "experience.heading": "Experience",
+      "exp.ttb.title": "Teknoloji Takip Bilişim — Software Developer Intern",
+      "exp.ttb.desc": "Built EduShift, a school scheduling platform, independently — coordinating frontend, database, and scheduling logic, and resolving issues through systematic testing.",
+      "exp.turksat.title": "Türksat — Frontend Software Engineering Intern",
+      "exp.turksat.desc": "Frontend development on CV-Hunter — CV upload flows, job listings, matched results display, internal API integration.",
+      "exp.wie.title": "IEEE Women in Engineering (WIE) — Coordination Member",
+      "exp.wie.desc": "Helped organize seminars, panels, and STEM outreach activities supporting women in engineering.",
+      "exp.adu.title": "Aydın Adnan Menderes University — B.Sc. Computer Engineering",
+      "exp.adu.desc": "Completed my degree; built FenLAB, my graduation project, independently across Android and backend.",
+      "exp.erasmus": "Erasmus exchange, Lodz University of Technology, Poland — Feb 2024 – Jul 2024",
+      "contact.heading": "Contact"
+    },
+    tr: {
+      "nav.work": "Çalışmalar", "nav.about": "Hakkımda", "nav.toolkit": "Araç Setim", "nav.experience": "Deneyim", "nav.contact": "İletişim",
+      "hero.badge": "Fırsatlara açığım", "hero.eyebrow": "Yazılım Mühendisi",
+      "hero.title": "Belirsizliği çalışan koda dönüştürürüm.",
+      "hero.sub": "Bir sistemin nasıl çalıştığını anlamayı severim, özellikle cevap belli değilse.",
+      "panel.focus": "Odak", "panel.focus-v": "Full-stack", "panel.base": "Konum", "panel.grad": "Mezuniyet",
+      "work.heading": "Seçilmiş Çalışmalar", "ui.expand": "Detaylar için dokun", "ui.pending": "Link bekleniyor",
+      "field.role": "Rolüm", "field.approach": "Teknik Yaklaşım", "field.decisions": "Önemli Kararlar", "field.outcome": "Sonuç",
+      "proj.fenlab.desc": "Öğretmenler ve öğrenciler için açık kaynaklı bir STEM deney paylaşım platformu.",
+      "proj.fenlab.role": "Tek başıma geliştirdiğim full-stack bir proje — Android uygulamasını ve backend'i uçtan uca kendim tasarladım ve geliştirdim. Bitirme tezi projem.",
+      "proj.fenlab.approach": "Android: Kotlin + Jetpack Compose (MVVM). Backend: Spring Boot, PostgreSQL, MinIO. Tez savunması için Railway'e deploy edildi.",
+      "proj.fenlab.decisions": "Railway deployment URL'si için veri mapping katmanının yeniden düzenlenmesi, Coil ile MinIO medya yükleme sorunlarının çözülmesi, EXIF yönü ve PDF/FileProvider davranışının düzeltilmesi.",
+      "proj.fenlab.outcome": "Tez savunmasında deploy edilip gösterildi. Şu anda üretim servisi olarak sürdürülmüyor.",
+      "proj.cvhunter.desc": "Türksat stajımda geliştirilen, yapay zeka destekli CV ve iş eşleştirme platformu.",
+      "proj.cvhunter.role": "Tek frontend geliştiricisiydim; ayrı backend ve yapay zeka ekipleriyle çalıştım. Eşleştirme sonuçlarını arayüze entegre ettim — algoritmayı ben geliştirmedim.",
+      "proj.cvhunter.approach": "React + React Query + Ant Design, durum yönetimi Zustand, kimlik doğrulama Keycloak — Türksat'ın iç API'leriyle entegrasyon.",
+      "proj.cvhunter.outcome": "Stajım süresince aktif geliştirme aşamasındaydı; sonrasının durumunu bilmiyorum.",
+      "proj.edushift.desc": "Bir staj projesi olarak geliştirilen okul haftalık ders programı yönetim sistemi.",
+      "proj.edushift.role": "Uçtan uca tek başıma geliştirdim — frontend, backend entegrasyonu ve veritabanı entegrasyonu/uygulaması.",
+      "proj.edushift.decisions": "Merkezi zorluk otomatik program oluşturma — rekürsif blok-desen algoritması ve iki katmanlı çakışma tespiti.",
+      "proj.edushift.outcome": "Hâlâ aktif geliştirme aşamasında; bazı işlevler henüz tamamlanmadı.",
+      "proj.adupass.desc": "Üç kişilik bir ekiple hackathon kapsamında geliştirilen kampüs giriş kontrol prototipi.",
+      "proj.adupass.role": "Üç kişilik ekibin bir üyesiydim — Flutter uygulaması, QR/NFC ve Firebase entegrasyonu üzerinde çalıştım. Yüz tanıma bireysel değil, ekip düzeyinde bir çalışmaydı.",
+      "proj.adupass.outcome": "Hackathon prototipi olarak tamamlandı; derece veya ödül alınmadı.",
+      "about.heading": "Hakkımda",
+      "about.p1": "Aydın Adnan Menderes Üniversitesi Bilgisayar Mühendisliği mezunuyum. Beni yazılıma çeken şey, bugüne kadar yaptığım her şeyi şekillendiren aynı şey: bir şeyin gerçekte nasıl çalıştığını anlamayı seviyorum, özellikle cevap belli değilse. Bu da beni frontend, backend ve mobil geliştirme arasında dolaştırdı — bir plandan çok, bir sistemin henüz tam anlamadığım kısmını takip etme isteğinden.",
+      "about.p2": "Eğitimimin yanı sıra, bir dönem Polonya'da Lodz Teknoloji Üniversitesi'nde Erasmus değişim programına katıldım; bu da bana farklı bir akademik ve kültürel ortamda öğrenme deneyimi kazandırdı. Ayrıca Türksat'ta bir yazılım stajı yaparak bir ekibin parçası olarak gerçek bir ürün üzerinde deneyim kazandım.",
+      "journey.adu": "Bilgisayar Mühendisliği'ne başladı, ADÜ", "journey.erasmus": "Erasmus değişimi, Łódź",
+      "journey.turksat": "Staj, Türksat", "journey.grad": "Mezuniyet, FenLAB",
+      "toolkit.heading": "Araç Setim",
+      "toolkit.frontend.title": "Frontend",
+      "toolkit.frontend.note": "Projelere göre farklı şekilde kullanıldı — CV-Hunter'da React, Ant Design ve React Query; EduShift'te React, Tailwind ve HeroUI.",
+      "toolkit.backend.title": "Backend & Veritabanları", "toolkit.backend.note": "FenLAB, CV-Hunter, EduShift, ADÜPass'ı (ekiple geliştirildi) kapsıyor.",
+      "toolkit.mobile.title": "Mobil Geliştirme", "toolkit.mobile.note": "FenLAB için Jetpack Compose, ADÜPass için Flutter.",
+      "toolkit.tools.title": "Araçlar & Platformlar", "toolkit.tools.note": "Türksat'tan Docker/Keycloak; FenLAB için MinIO/Railway; ADÜPass'ta Cursor.",
+      "experience.heading": "Deneyim",
+      "exp.ttb.title": "Teknoloji Takip Bilişim — Yazılım Geliştirici Stajyeri",
+      "exp.ttb.desc": "EduShift'i, bir okul programlama platformunu bağımsız olarak geliştirdim — frontend, veritabanı ve programlama mantığını koordine ederek, sorunları sistematik testlerle çözerek.",
+      "exp.turksat.title": "Türksat — Frontend Yazılım Stajyeri",
+      "exp.turksat.desc": "CV-Hunter üzerinde frontend geliştirme — CV yükleme akışları, iş ilanları, eşleşme sonuçları gösterimi, iç API entegrasyonu.",
+      "exp.wie.title": "IEEE Women in Engineering (WIE) — Koordinasyon Üyesi",
+      "exp.wie.desc": "Kadın mühendisleri desteklemek amacıyla seminer, panel ve STEM etkinliklerinin organizasyonuna katkıda bulundum.",
+      "exp.adu.title": "Aydın Adnan Menderes Üniversitesi — Bilgisayar Mühendisliği Lisans",
+      "exp.adu.desc": "Eğitimimi tamamladım; bitirme projem FenLAB'ı Android ve backend tarafını tek başıma geliştirerek hayata geçirdim.",
+      "exp.erasmus": "Erasmus değişim programı, Lodz Teknoloji Üniversitesi, Polonya — Şubat 2024 – Temmuz 2024",
+      "contact.heading": "İletişim"
+    }
+  };
+
+  function setLanguage(lang) {
+    document.querySelectorAll('[data-i18n]').forEach(function (el) {
+      var key = el.getAttribute('data-i18n');
+      if (i18n[lang][key]) el.textContent = i18n[lang][key];
+    });
+    document.querySelectorAll('.lang-toggle button').forEach(function (btn) {
+      btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+    });
+    document.getElementById('html-root').setAttribute('lang', lang);
+    try { window.localStorage.setItem('portfolio-lang', lang); } catch (e) {}
+  }
+  document.querySelectorAll('.lang-toggle button').forEach(function (btn) {
+    btn.addEventListener('click', function () { setLanguage(btn.getAttribute('data-lang')); });
+  });
+  var savedLang = 'en';
+  try { var s = window.localStorage.getItem('portfolio-lang'); if (s === 'en' || s === 'tr') savedLang = s; } catch (e) {}
+  setLanguage(savedLang);
+
   function toggleProject(e, card) {
     e.preventDefault();
     var wasOpen = card.classList.contains('open');
-    document.querySelectorAll('.project-card.open').forEach(function (c) {
-      if (c !== card) c.classList.remove('open');
-    });
+    document.querySelectorAll('.project-card.open').forEach(function (c) { if (c !== card) c.classList.remove('open'); });
     card.classList.toggle('open', !wasOpen);
   }
 </script>
